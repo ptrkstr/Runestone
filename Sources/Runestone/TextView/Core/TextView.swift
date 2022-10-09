@@ -1286,6 +1286,11 @@ private extension TextView {
 
 // MARK: - TextInputViewDelegate
 extension TextView: TextInputViewDelegate {
+    
+    func textInputViewMenuElement(_ view: TextInputView) -> UIMenuElement? {
+        editorDelegate?.textViewMenuElement(self)
+    }
+    
     func textInputViewWillBeginEditing(_ view: TextInputView) {
         guard isEditable else {
             return
@@ -1392,6 +1397,10 @@ extension TextView: TextInputViewDelegate {
 
     func textInputView(_ view: TextInputView, replaceTextIn highlightedRange: HighlightedRange) {
         editorDelegate?.textView(self, replaceTextIn: highlightedRange)
+    }
+
+    func textInputView(_ view: TextInputView, textForLine line: String?) -> String? {
+        editorDelegate?.textView(self, textForLine: line)
     }
 }
 

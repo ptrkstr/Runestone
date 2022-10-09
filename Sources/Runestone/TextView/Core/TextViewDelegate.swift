@@ -1,7 +1,10 @@
 import Foundation
+import UIKit
 
 /// The methods for receiving editing-related messages for the text view.
 public protocol TextViewDelegate: AnyObject {
+    
+    func textViewMenuElement(_ textView: TextView) -> UIMenuElement?
     /// Asks the delegate whether to begin editing in the text view.
     /// - Parameter textView: The text view for which editing is about to begin.
     /// - Returns: `true` if editing should be initiated; otherwise, `false` to disallow editing.
@@ -101,6 +104,8 @@ public protocol TextViewDelegate: AnyObject {
     ///
     /// The text view will call this method when the user chooses to replace the text in the highlighted range, for example by selecting the action in a [UIMenuController](https://developer.apple.com/documentation/uikit/uimenucontroller).
     func textView(_ textView: TextView, replaceTextIn highlightedRange: HighlightedRange)
+    
+    func textView(_ textView: TextView, textForLine line: String?) -> String?    
 }
 
 public extension TextViewDelegate {
@@ -147,4 +152,6 @@ public extension TextViewDelegate {
     }
 
     func textView(_ textView: TextView, replaceTextIn highlightedRange: HighlightedRange) {}
+    
+    func textView(_ textView: TextView, textForLine line: String?) -> String? { nil }
 }

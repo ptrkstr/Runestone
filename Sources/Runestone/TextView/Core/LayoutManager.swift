@@ -3,6 +3,7 @@
 import UIKit
 
 protocol LayoutManagerDelegate: AnyObject {
+    func layoutManager(_ layoutManager: LayoutManager, textForLine line: String?) -> String?
     func layoutManager(_ layoutManager: LayoutManager, didProposeContentOffsetAdjustment contentOffsetAdjustment: CGPoint)
 }
 
@@ -473,7 +474,8 @@ extension LayoutManager {
             // There's a single line fragment, so we center the line number in the height of the line.
             yPosition += (lineController.lineHeight - fontLineHeight) / 2
         }
-        lineNumberView.text = "\(line.index + 1)"
+//        print(Date())
+        lineNumberView.text = delegate?.layoutManager(self, textForLine: lineController.attributedString?.string) ?? "\(line.index + 1)"
         lineNumberView.font = theme.lineNumberFont
         lineNumberView.textColor = theme.lineNumberColor
         lineNumberView.frame = CGRect(x: xPosition, y: yPosition, width: gutterWidthService.lineNumberWidth, height: fontLineHeight)

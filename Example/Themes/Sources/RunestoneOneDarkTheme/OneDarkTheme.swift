@@ -6,14 +6,14 @@ public final class OneDarkTheme: EditorTheme {
     public let backgroundColor = UIColor(namedInModule: "OneDarkBackground")
     public let userInterfaceStyle: UIUserInterfaceStyle = .dark
 
-    public let font: UIFont = .monospacedSystemFont(ofSize: 14, weight: .regular)
+    public let font: UIFont = UIFontMetrics.default.scaledFont(for: .monospacedSystemFont(ofSize: 14, weight: .regular))
     public let textColor = UIColor(namedInModule: "OneDarkForeground")
 
     public let gutterBackgroundColor = UIColor(namedInModule: "OneDarkCurrentLine")
     public let gutterHairlineColor: UIColor = .opaqueSeparator
 
     public let lineNumberColor = UIColor(namedInModule: "OneDarkForeground").withAlphaComponent(0.5)
-    public let lineNumberFont: UIFont = .monospacedSystemFont(ofSize: 14, weight: .regular)
+    public let lineNumberFont: UIFont = UIFontMetrics.default.scaledFont(for: .monospacedSystemFont(ofSize: 14, weight: .regular))
 
     public let selectedLineBackgroundColor = UIColor(namedInModule: "OneDarkCurrentLine")
     public let selectedLinesLineNumberColor = UIColor(namedInModule: "OneDarkForeground")

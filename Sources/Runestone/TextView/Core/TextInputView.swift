@@ -3,6 +3,8 @@ import Combine
 import UIKit
 
 protocol TextInputViewDelegate: AnyObject {
+    func textInputViewMenuElement(_ view: TextInputView) -> UIMenuElement?
+    func textInputView(_ view: TextInputView, textForLine line: String?) -> String?
     func textInputViewWillBeginEditing(_ view: TextInputView)
     func textInputViewDidBeginEditing(_ view: TextInputView)
     func textInputViewDidEndEditing(_ view: TextInputView)
@@ -1591,6 +1593,10 @@ extension TextInputView: LayoutManagerDelegate {
     func layoutManager(_ layoutManager: LayoutManager, didProposeContentOffsetAdjustment contentOffsetAdjustment: CGPoint) {
         delegate?.textInputView(self, didProposeContentOffsetAdjustment: contentOffsetAdjustment)
     }
+    
+    func layoutManager(_ layoutManager: LayoutManager, textForLine line: String?) -> String? {
+        delegate?.textInputView(self, textForLine: line)
+    }
 }
 
 // MARK: - IndentControllerDelegate
@@ -1612,6 +1618,11 @@ extension TextInputView: IndentControllerDelegate {
 
 // MARK: - EditMenuControllerDelegate
 extension TextInputView: EditMenuControllerDelegate {
+    
+    func editMenuControllerMenuElement(_ controller: EditMenuController) -> UIMenuElement? {
+        return delegate?.textInputViewMenuElement(self)
+    }
+    
     func editMenuController(_ controller: EditMenuController, caretRectAt location: Int) -> CGRect {
         return caretRectService.caretRect(at: location, allowMovingCaretToNextLineFragment: false)
     }

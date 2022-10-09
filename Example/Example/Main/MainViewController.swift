@@ -44,6 +44,18 @@ final class MainViewController: UIViewController {
         setupMenuButton()
         setupTextView()
         updateTextViewSettings()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(didChange(notification:)), name: UIContentSizeCategory.didChangeNotification, object: nil)
+    }
+    
+    @objc
+    func didChange(notification: Notification) {
+//        guard let aaa = notification.userInfo[UIContentSizeCategory.newValueUserInfoKey] else {
+//            return
+//        }
+        let settings = UserDefaults.standard
+        let theme = settings.theme.makeTheme()
+        contentView.textView.applyTheme(theme)
     }
 }
 
@@ -202,12 +214,20 @@ private extension MainViewController {
 }
 
 extension MainViewController: TextViewDelegate {
+    func textViewMenuElement(_ textView: Runestone.TextView) -> UIMenuElement? {
+        nil
+    }
+    
     func textViewDidChange(_ textView: TextView) {
         UserDefaults.standard.text = textView.text
     }
-
+    
     func textView(_ textView: TextView, canReplaceTextIn highlightedRange: HighlightedRange) -> Bool {
         return true
+    }
+    
+    func textView(_ textView: TextView, textForLine line: String?) -> String? {
+        String(describing: (1..<999).randomElement()!)
     }
 }
 

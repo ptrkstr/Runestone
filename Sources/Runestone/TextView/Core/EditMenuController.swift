@@ -1,6 +1,7 @@
 import UIKit
 
 protocol EditMenuControllerDelegate: AnyObject {
+    func editMenuControllerMenuElement(_ controller: EditMenuController) -> UIMenuElement?
     func editMenuController(_ controller: EditMenuController, highlightedRangeFor range: NSRange) -> HighlightedRange?
     func editMenuController(_ controller: EditMenuController, canReplaceTextIn highlightedRange: HighlightedRange) -> Bool
     func editMenuController(_ controller: EditMenuController, caretRectAt location: Int) -> CGRect
@@ -51,10 +52,13 @@ final class EditMenuController: NSObject {
     }
 
     func editMenu(for textRange: UITextRange, suggestedActions: [UIMenuElement]) -> UIMenu? {
-        guard let textRange = textRange as? IndexedRange, let replaceAction = replaceActionIfAvailable(for: textRange.range) else {
+//        guard let textRange = textRange as? IndexedRange, let replaceAction = replaceActionIfAvailable(for: textRange.range) else {
+//            return UIMenu(children: suggestedActions)
+//        }
+        guard let action = delegate?.editMenuControllerMenuElement(self) else {
             return UIMenu(children: suggestedActions)
         }
-        return UIMenu(children: suggestedActions + [replaceAction])
+        return UIMenu(children: [action] + suggestedActions)
     }
 }
 

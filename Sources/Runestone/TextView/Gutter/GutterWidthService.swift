@@ -65,7 +65,7 @@ final class GutterWidthService {
 
 private extension GutterWidthService {
     private func computeLineNumberWidth() -> CGFloat {
-        let characterCount = "\(lineManager.lineCount)".count
+        let characterCount = 3//"\(lineManager.lineCount)".count
         let wideLineNumberString = String(repeating: "8", count: characterCount)
         let wideLineNumberNSString = wideLineNumberString as NSString
         let size = wideLineNumberNSString.size(withAttributes: [.font: font])
